@@ -13,7 +13,10 @@ return [
     |
     */
 
-    'name' => 'Project Name',
+    'name' => 'Dapurpedia',
+
+    // App slogan
+    'slogan' => 'Belanja di pasar tradisional di genggaman mu',
 
     /*
     |--------------------------------------------------------------------------
