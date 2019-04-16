@@ -13,12 +13,20 @@ class AdminSeeder extends Seeder
      */
     public function run()
     {
-        User::create([
+        $user = User::create([
             'username' => 'admin',
             'nama' => 'Administrator',
             'jenis' =>  'SUPERADMIN',
             'password' => Hash::make('admin'),
             'email' => 'admin@admin.com'
+        ]);
+
+        $user->admin()->create([
+            'no_telp' => 0000000000,
+            'alamat' => 'Sungai Raya Dalam, Pontianak',
+            'created_at' =>  now(),
+            'updated_at' => now(),
+
         ]);
     }
 }
