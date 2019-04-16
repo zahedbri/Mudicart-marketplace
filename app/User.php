@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'username', 'email', 'password',
+        'nama', 'username', 'email', 'password', 'jenis',
     ];
 
     /**
@@ -27,4 +27,24 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function admin()
+    {
+        return $this->hasOne("App\Admin");
+    }
+
+    public function driver()
+    {
+        return $this->hasOne("App\Driver");
+    }
+
+    public function penjual()
+    {
+        return $this->hasOne("App\Penjual");
+    }
+
+    public function pembeli()
+    {
+        return $this->hasOne("App\Pembeli");
+    }
 }

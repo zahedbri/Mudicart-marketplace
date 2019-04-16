@@ -31,3 +31,7 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 const app = new Vue({
     el: '#app'
 });
+
+
+var turbolinks = require("turbolinks");
+turbolinks.start();

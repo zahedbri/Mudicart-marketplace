@@ -11,7 +11,26 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
-.navbar-laravel {
-  background-color: #fff;
+.navbar-dapurpedia {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+a.nav-link:hover{
+  color:white;
+}
+
+img.img-card{
+  max-width: 5rem;
+  min-width: 2rem;
+  max-height: 5rem;
+  min-height: 2rem;
+}
+
+a.link-unstyled{
+  color:inherit;
+}
+
+a.link-unstyled:hover{
+  color:inherit;
+  text-decoration: inherit;
 }
