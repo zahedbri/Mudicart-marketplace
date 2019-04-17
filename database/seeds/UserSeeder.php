@@ -28,7 +28,7 @@ class UserSeeder extends Seeder
             factory(App\User::class, 30)
                 ->create()
                 ->each(function($user){
-                    $user->driver()->save(factory(App\Penjual::class)->make());
+                    $user->driver()->save(factory(App\Pembeli::class)->make());
                 });
         });
     }
