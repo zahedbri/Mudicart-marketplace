@@ -13,20 +13,21 @@ class UserSeeder extends Seeder
     public function run()
     {
         DB::transaction(function() {
-            factory(App\User::class, 30)
+            factory(App\User::class, 300)
                 ->create()
                 ->each(function($user){
                     switch($user->jenis)
                     {
+                        case UserLevel::PENJUAL:
+                            $user->penjual()->save(factory(App\Penjual::class)->make());
+                            break;
                         case UserLevel::DRIVER:
                             $user->driver()->save(factory(App\Driver::class)->make());
                             break;
                         case UserLevel::PEMBELI:
-                            $user->driver()->save(factory(App\Pembeli::class)->make());
+                            $user->pembeli()->save(factory(App\Pembeli::class)->make());
                             break;
-                        case UserLevel::PENJUAL:
-                            $user->driver()->save(factory(App\Penjual::class)->make());
-                            break;
+                        
                     }
                 });
         });
