@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-
+use App\Enums\UserLevel;
 
 class UserSeeder extends Seeder
 {
@@ -16,19 +16,18 @@ class UserSeeder extends Seeder
             factory(App\User::class, 30)
                 ->create()
                 ->each(function($user){
-                    $user->driver()->save(factory(App\Driver::class)->make());
-                });
-                
-            factory(App\User::class, 30)
-                ->create()
-                ->each(function($user){
-                    $user->driver()->save(factory(App\Penjual::class)->make());
-                });
-
-            factory(App\User::class, 30)
-                ->create()
-                ->each(function($user){
-                    $user->driver()->save(factory(App\Pembeli::class)->make());
+                    switch($user->jenis)
+                    {
+                        case UserLevel::DRIVER:
+                            $user->driver()->save(factory(App\Driver::class)->make());
+                            break;
+                        case UserLevel::PEMBELI:
+                            $user->driver()->save(factory(App\Pembeli::class)->make());
+                            break;
+                        case UserLevel::PENJUAL:
+                            $user->driver()->save(factory(App\Penjual::class)->make());
+                            break;
+                    }
                 });
         });
     }
