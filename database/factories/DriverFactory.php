@@ -8,6 +8,6 @@ $factory->define(App\Driver::class, function (Faker $faker) {
         "no_telp" => $faker->unique()->e164PhoneNumber,
         "kota" => $faker->city,
         'alamat' => $faker->address,
-        'telah_diverifikasi' => $faker->numberBetween(0,1)
+        'telah_diverifikasi' => $faker->randomElement([0,1])
     ];
 });
