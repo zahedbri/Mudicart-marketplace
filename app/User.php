@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Carbon\Carbon;
 
 class User extends Authenticatable
 {
@@ -28,6 +29,11 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    public function type()
+    {
+        return ucfirst(strtolower($this->jenis));
+    }
+
     public function admin()
     {
         return $this->hasOne("App\Admin");
@@ -46,5 +52,11 @@ class User extends Authenticatable
     public function pembeli()
     {
         return $this->hasOne("App\Pembeli");
+    }
+
+    public function tanggalDaftar()
+    {
+        $tanggal = Carbon::parse($this->created_at);
+        return $tanggal->isoFormat("d MMMM Y");
     }
 }

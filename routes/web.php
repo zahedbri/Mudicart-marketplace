@@ -27,6 +27,15 @@ Route::middleware(['guest'])->group(function(){
     Route::post('register/pembeli','Auth\CustomRegisterController@simpanPenjual');
 });
 
+Route::get('dashboard','AdminDashboardController@index')->name('admin.dashboard');
+Route::get('manajemen-driver','VerifikasiController@indexDriver')->name('admin.manajemen.driver');
+Route::get('manajemen-pembeli','VerifikasiController@indexPembeli')->name('admin.manajemen.pembeli');
+Route::get('manajemen-penjual','VerifikasiController@indexPenjual')->name('admin.manajemen.penjual');
+
+Route::post('verifikasi-driver/{idDriver}','VerifikasiController@updateDriver')->name('verif.driver');
+Route::post('verifikasi-Pembeli/{idPembeli}','VerifikasiController@updatePembeli')->name('verif.pembeli');
+Route::post('verifikasi-Penjual/{idPenjual}','VerifikasiController@updatePenjual')->name('verif.penjual');
+
 
 
 Route::get('/home', 'HomeController@index')->name('home');
