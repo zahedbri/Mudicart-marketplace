@@ -6,6 +6,7 @@
  */
 
 require('./bootstrap');
+require('sweetalert');
 
 window.Vue = require('vue');
 
@@ -33,5 +34,7 @@ const app = new Vue({
 });
 
 
-var turbolinks = require("turbolinks");
-turbolinks.start();
+// var turbolinks = require("turbolinks");
+
+
+// turbolinks.start();

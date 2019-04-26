@@ -15001,6 +15001,7 @@ img.img-card {
 
 a.link-unstyled {
   color: inherit;
+  outline: none;
 }
 
 a.link-unstyled:hover {
@@ -15047,6 +15048,13 @@ body {
 
   #wrapper.toggled #sidebar-wrapper {
     margin-left: -15rem;
+  }
+
+  .img-carousel-item {
+    height: 300px;
+    margin-top: auto;
+    margin-bottom: auto;
+    text-align: center !important;
   }
 }
 

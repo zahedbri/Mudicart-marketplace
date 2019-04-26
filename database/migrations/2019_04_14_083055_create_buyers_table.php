@@ -21,6 +21,7 @@ class CreateBuyersTable extends Migration
             $table->string("alamat",255);
             $table->boolean("telah_diverifikasi")->default(0);
             $table->string("no_telp");
+            $table->string("foto_profil")->nullable();
             $table->timestamps();
         });
     }
