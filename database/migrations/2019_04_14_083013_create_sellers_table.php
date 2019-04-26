@@ -22,6 +22,7 @@ class CreateSellersTable extends Migration
             $table->boolean("telah_diverifikasi")->default(0);
             $table->string("alamat",255);
             $table->string("deskripsi")->nullable();
+            $table->string("foto_profil")->nullable();
             $table->timestamps();
         });
     }

@@ -24,9 +24,9 @@
       <div class="sidebar-heading">Dapurpedia</div>
       <div class="list-group list-group-flush">
         <a href="{{route('admin.dashboard') == url()->current() ? '#' : route('admin.dashboard')}}" class="list-group-item list-group-item-action bg-light"> <i class="fa fa-home"></i> Menu Utama</a>
-        <a href="{{ route('admin.manajemen.driver') == url()->current() ? '#' : route('admin.manajemen.driver')}}" class="list-group-item list-group-item-action bg-light"> <i class="fa fa-motorcycle"></i> Manajemen Driver</a>
-        <a href="{{route('admin.manajemen.pembeli') == url()->current() ? '#' : route('admin.manajemen.pembeli')}}" class="list-group-item list-group-item-action bg-light"> <i class="fas fa-shopping-basket"></i> </i> Manajemen Pembeli</a>
-        <a href="{{route('admin.manajemen.penjual') == url()->current() ? '#' : route('admin.manajemen.penjual')}}" class="list-group-item list-group-item-action bg-light"> <i class="fas fa-address-book"></i> Manajemen Penjual</a>
+        <a href="{{ route('admin.manajemen.driver') == url()->current() ? '#' : route('admin.manajemen.driver')}}" class="list-group-item list-group-item-action bg-light"> <i class="fa fa-list"></i> Manajemen Produk</a>
+        <a href="{{route('admin.manajemen.pembeli') == url()->current() ? '#' : route('admin.manajemen.pembeli')}}" class="list-group-item list-group-item-action bg-light"> <i class="fas fa-user"></i> </i> Profil Saya</a>
+        <a href="{{route('admin.manajemen.penjual') == url()->current() ? '#' : route('admin.manajemen.penjual')}}" class="list-group-item list-group-item-action bg-light"> <i class="fas fa-phone"></i> Hubungi Admin</a>
       </div>
     </div>
     <!-- /#sidebar-wrapper -->
@@ -45,15 +45,12 @@
           <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
             <li class="nav-item dropdown">
               <a class="nav-link active dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                {{Auth::user()->nama}}
+                Admin Name
               </a>
               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                    Logout
-                </a>
-
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                    @csrf
+                <a id="logout-link" class="dropdown-item" href="#">Logout</a>
+                <form id="form-logout" method="POST" class="hidden" action="{{route('logout')}}">
+                  @csrf
                 </form>
               </div>
             </li>
@@ -77,7 +74,9 @@
       $("#wrapper").toggleClass("toggled");
     });
 
-
+    $('#logout-link').click(function(){
+      ('#form-logout').submit();
+    });
   </script>
 
 </body>

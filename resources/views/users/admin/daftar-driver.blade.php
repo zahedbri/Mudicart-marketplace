@@ -1,5 +1,7 @@
 @extends("users.admin.include.admin-navbar")
 @section("content")
+@include('users.admin.include.alerts')
+
     <div class="container">
         <div class="table-responsive my-5">
             <div class="float-right">

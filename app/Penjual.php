@@ -7,11 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 class Penjual extends Model
 {
     protected $table = 'tb_penjual';
-    protected $fillable = ['kota','alamat','no_telp'];
+    protected $fillable = ['kota','alamat','no_telp','foto_profil'];
     protected $hidden = ['telah_diverifikasi'];
 
     public function user()
     {
         return $this->belongsTo("App\User");
+    }
+
+    public function produk(){
+        return $this->hasMany('App\Produk');
     }
 }

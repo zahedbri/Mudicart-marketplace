@@ -1,5 +1,6 @@
 @extends("shared.layout")
 @section("content")
+@include('users.admin.include.alerts')
     <div class="container">
         <div class="table-responsive my-5">
             <h3>Pendaftar</h3>

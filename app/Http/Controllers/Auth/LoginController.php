@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Auth;
+use App\Enums\UserLevel;
+use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
@@ -33,12 +36,31 @@ class LoginController extends Controller
     // Route to go to after log in
     public function redirectTo()
     {
-        return route('home');
+        $user = Auth::user();
+        switch($user->jenis)
+        {
+            case UserLevel::SUPERADMIN:
+                return route('admin.dashboard');
+            case UserLevel::PENJUAL:
+                return route('penjual.dashboard');
+            case UserLevel::PEMBELI:
+                return route('pembeli.dashboard');
+            case UserLevel::DRIVER:
+                return route('driver.dashboard');
+            default :
+                return '/';
+        }
     }
 
     // Column to be used as username
     public function username()
     {
         return 'username';
+    }
+
+
+    public function loggedOut()
+    {
+        return redirect('login');
     }
 }
