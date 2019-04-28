@@ -7,6 +7,9 @@ use App\Penjual;
 use App\Http\Requests\Edit\PenjualRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\Profil\PenjualRequest as ProfilPenjualRequest;
+use Illuminate\Support\Facades\Hash;
 
 class PenjualController extends Controller
 {
@@ -34,5 +37,42 @@ class PenjualController extends Controller
             $penjual->user()->update($reqArray);
         });
         return redirect()->back()->with('success',"Profil ". $penjual->user->nama." berhasil diperbaharui !");
+    }
+
+    public function editProfil()
+    {
+        $user = Auth::user()->load(['penjual']);
+        return view('users.penjual.profil-saya',compact('user'));
+    }
+
+    public function updateProfil(ProfilPenjualRequest $request)
+    {
+        $user = Auth::user()->load(['penjual']);
+        $arrUser = [
+            "nama" => $request->nama,
+            "email" => $request->email,
+        ];
+        if(!empty($request->password))
+        {
+            if(Hash::check($request->password_lama,$user->password)){
+                $arrUser['password'] = Hash::make($request->password);
+            } else {
+                return redirect()->back()->with("error","Password Lama Tidak sesuai");
+            }
+        }
+        $user->update($arrUser);
+        $arrProfilPenjual = [
+            "deskripsi" => $request->deskripsi,
+            "no_telp" => $request->no_telp,
+            "kota" => $request->kota,
+            "alamat" => $request->alamat,
+        ];
+        if($request->hasFile('foto_profil'))
+        {
+            $filename = empty($user->penjual->foto_profil) ? uniqid("dp-").'.'.$request->file('foto_profil')->extension() : explode(".",$user->penjual->foto_profil)[0].'.'.$request->file('foto_profile');
+            $arrProfilPenjual["foto_profil"] = $filename;
+        }
+        $user->penjual->update();
+        return redirect()->back()->with("success","Profil anda berhasil diperbaharui !");
     }
 }

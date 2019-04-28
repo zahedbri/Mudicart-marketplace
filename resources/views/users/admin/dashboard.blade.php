@@ -1,6 +1,13 @@
 @extends('users.admin.include.admin-navbar')
+@section('breadcrumb')
+    <div class="mt-4">
+        <nav class="breadcrumb">
+            <span class="breadcrumb-item active">Dashboard</span>
+        </nav>
+    </div>
+@endsection
 @section('content')
-    <div class="row py-5">
+    <div class="row">
         <div class="col-md-4 pb-3">
             <div class="card">
                 <div class="card-body">

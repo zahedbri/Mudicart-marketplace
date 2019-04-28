@@ -41,5 +41,15 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('driver',function($user){
             return $user->jenis == UserLevel::DRIVER;
         });
+
+        Gate::define('PhotoCreate','App\Policies\GalleryPolicy@create');
+        Gate::define('PhotoStore','App\Policies\GalleryPolicy@store');
+        Gate::define('PhotoEdit','App\Policies\GalleryPolicy@edit');
+        Gate::define('PhotoUpdate','App\Policies\GalleryPolicy@update');
+        Gate::define('PhotoDelete','App\Policies\GalleryPolicy@delete');
+
+        
+
+
     }
 }

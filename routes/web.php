@@ -10,9 +10,10 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/','MainMenuController@index');
+Route::get('produk/{produk}','MainMenuController@lihatProduk')->name('lihat.produk');
+
+
 
 Route::get('/home', 'HomeController@index')->name('home');
 
@@ -39,27 +40,33 @@ Route::group(['middleware'=>['can:superadmin'],'prefix'=>'admin'],function(){
     Route::post('verifikasi-Pembeli/{idPembeli}','VerifikasiController@updatePembeli')->name('verif.pembeli');
     Route::post('verifikasi-Penjual/{idPenjual}','VerifikasiController@updatePenjual')->name('verif.penjual');
     
-    Route::get('profil-driver/{id}','DriverController@edit');
-    Route::post('profil-driver/{id}','DriverController@update');
+    Route::get('profil-driver/{id}','DriverController@edit')->name('edit.driver');
+    Route::post('profil-driver/{id}','DriverController@update')->name('update.driver');
     
-    Route::get('profil-penjual/{id}','PenjualController@edit');
-    Route::post('profil-penjual/{id}','PenjualController@update');
+    Route::get('profil-penjual/{id}','PenjualController@edit')->name('edit.penjual');
+    Route::post('profil-penjual/{id}','PenjualController@update')->name('update.penjual');
     
-    Route::get('profil-pembeli/{id}','PembeliController@edit');
-    Route::post('profil-pembeli/{id}','PembeliController@update');
+    Route::get('profil-pembeli/{id}','PembeliController@edit')->name('edit.pembeli');
+    Route::post('profil-pembeli/{id}','PembeliController@update')->name('update.pembeli');
 });
 
 
 Route::group(['middleware'=>['can:penjual'], 'prefix'=>'penjual'],function(){
     Route::get('/','ProdukController@index')->name('penjual.dashboard');
-    Route::get('manajemen-produk','ProdukController@index')->name('penjual.produk');
     Route::get('manajemen-produk/{produk}','ProdukController@edit')->name('produk.edit');
     Route::post('manajemen-produk/{produk}','ProdukController@update')->name('produk.update');    
 
     Route::prefix('galeri-produk')->group(function(){
         Route::get('/{produk}','GalleryController@create')->name('galeri.create');
         Route::post('/{produk}','GalleryController@store')->name('galeri.store');
-        Route::post('/hapus/{fotoproduk}','GalleryController@delete')->name('photo.delete');
+        Route::get('/ubah-foto/{fotoproduk}','GalleryController@edit')->name('photo.edit');
+        Route::post('/ubah-foto/{fotoproduk}','GalleryController@update')->name('photo.update');
+        Route::post('/hapus-foto/{fotoproduk}','GalleryController@delete')->name('photo.delete');
+    });
+
+    Route::prefix('profil')->group(function(){
+        Route::get('/','PenjualController@editProfil')->name('profil.edit');
+        Route::post('/','PenjualController@updateProfil')->name('profil.update');
     });
 
     

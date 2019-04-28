@@ -1,4 +1,15 @@
 @extends('users.admin.include.admin-navbar')
+
+@section('breadcrumb')
+    <div class="mt-4">
+        <nav class="breadcrumb">
+            <a href="{{route('admin.dashboard')}}" class="breadcrumb-item">Dashboard</a>
+            <a href="{{route('admin.manajemen.pembeli')}}" class="breadcrumb-item">Manajemen Pembeli</a>
+            <span class="breadcrumb-item active">Profil Driver</span>
+        </nav>
+    </div>
+@endsection
+
 @section('content')
 @if (Session::has('success'))
     <div class="alert alert-success mt-2" role="alert">
