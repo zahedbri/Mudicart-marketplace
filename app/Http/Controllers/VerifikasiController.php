@@ -15,25 +15,25 @@ class VerifikasiController extends Controller
 {
     public function indexDriver()
     {
-        $user = User::where('jenis','driver')->with("driver")->paginate(15);
+        $user = User::where('jenis','driver')->where('users.nama','like','%'.request('nama').'%')->with("driver")->paginate(15);
         return view('users.admin.daftar-driver',["users" => $user]);
     }
 
     public function indexPembeli()
     {
-        $user = User::where('jenis','pembeli')->with("pembeli")->paginate(15);
+        $user = User::where('jenis','pembeli')->where('users.nama','like','%'.request('nama').'%')->with("pembeli")->paginate(15);
         return view('users.admin.daftar-pembeli',["users" => $user]);
     }
 
     public function indexPenjual()
     {
-        $user = User::where('jenis','penjual')->with("penjual")->paginate(15);
+        $user = User::where('jenis','penjual')->where('users.nama','like','%'.request('nama').'%')->with("penjual")->paginate(15);
         return view('users.admin.daftar-penjual',["users" => $user]);
     }
 
     public function updateDriver($idDriver)
     {
-        $driver = Driver::findOrFail($driverId);
+        $driver = Driver::findOrFail($idDriver);
         // toggle status
         $driver->telah_diverifikasi = $driver->telah_diverifikasi ? 0 : 1;
         $driver->save();

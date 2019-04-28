@@ -21,12 +21,12 @@
 
     <!-- Sidebar -->
     <div class="bg-light border-right" id="sidebar-wrapper">
-      <div class="sidebar-heading">Dapurpedia</div>
+      <a class="link-unstyled" href="{{url('/')}}"><div class="sidebar-heading">Dapurpedia</div></a>
       <div class="list-group list-group-flush">
-        <a href="{{route('admin.dashboard') == url()->current() ? '#' : route('admin.dashboard')}}" class="list-group-item list-group-item-action bg-light"> <i class="fa fa-home"></i> Menu Utama</a>
-        <a href="{{ route('admin.manajemen.driver') == url()->current() ? '#' : route('admin.manajemen.driver')}}" class="list-group-item list-group-item-action bg-light"> <i class="fa fa-list"></i> Manajemen Produk</a>
-        <a href="{{route('admin.manajemen.pembeli') == url()->current() ? '#' : route('admin.manajemen.pembeli')}}" class="list-group-item list-group-item-action bg-light"> <i class="fas fa-user"></i> </i> Profil Saya</a>
-        <a href="{{route('admin.manajemen.penjual') == url()->current() ? '#' : route('admin.manajemen.penjual')}}" class="list-group-item list-group-item-action bg-light"> <i class="fas fa-phone"></i> Hubungi Admin</a>
+        <a href="{{route('penjual.dashboard') == url()->current() ? '#' : route('penjual.dashboard')}}" class="list-group-item list-group-item-action bg-light"> <i class="fa fa-home"></i> Menu Utama</a>
+        <a href="#" class="list-group-item list-group-item-action bg-light"> <i class="fa fa-list"></i> Permintaan</a>
+        <a href="{{route('profil.edit') == url()->current() ? '#' : route('profil.edit')}}" class="list-group-item list-group-item-action bg-light"> <i class="fas fa-user"></i> </i> Profil Saya</a>
+        <a href="#" class="list-group-item list-group-item-action bg-light"> <i class="fas fa-phone"></i> Hubungi Admin</a>
       </div>
     </div>
     <!-- /#sidebar-wrapper -->
@@ -45,21 +45,26 @@
           <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
             <li class="nav-item dropdown">
               <a class="nav-link active dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Admin Name
+                {{Auth::user()->nama}}
               </a>
               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                <a id="logout-link" class="dropdown-item" href="#">Logout</a>
-                <form id="form-logout" method="POST" class="hidden" action="{{route('logout')}}">
-                  @csrf
-                </form>
+                  <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                      Logout
+                  </a>
+  
+                  <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                      @csrf
+                  </form>
               </div>
             </li>
           </ul>
         </div>
       </nav>
-
-      <div class="container-fluid">
-        @yield('content')
+      <div class="container">
+        @yield('breadcrumb')
+        <div class="w-75">
+          @yield('content')
+        </div>
       </div>
     </div>
     <!-- /#page-content-wrapper -->
@@ -73,12 +78,9 @@
       e.preventDefault();
       $("#wrapper").toggleClass("toggled");
     });
-
-    $('#logout-link').click(function(){
-      ('#form-logout').submit();
-    });
   </script>
 
 </body>
 
 </html>
+

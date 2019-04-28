@@ -29,4 +29,15 @@ class Produk extends Model
         return $this->hasMany('App\FotoProduk');
     }
 
+    public function displayUrl()
+    {
+        $gallery = $this->gallery; 
+        return $gallery->isEmpty() ? asset('img/product.jpg') : asset('storage/foto_produk/'.$gallery->first()->foto_produk);
+    }
+
+    public function deskripsi()
+    {
+        return nl2br($this->deskripsi);
+    }
+
 }

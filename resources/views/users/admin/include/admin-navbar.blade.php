@@ -21,7 +21,7 @@
 
     <!-- Sidebar -->
     <div class="bg-light border-right" id="sidebar-wrapper">
-      <div class="sidebar-heading">Dapurpedia</div>
+      <a href="{{url('')}}" class="link-unstyled"><div class="sidebar-heading"> Dapurpedia</div></a>
       <div class="list-group list-group-flush">
         <a href="{{route('admin.dashboard') == url()->current() ? '#' : route('admin.dashboard')}}" class="list-group-item list-group-item-action bg-light"> <i class="fa fa-home"></i> Menu Utama</a>
         <a href="{{ route('admin.manajemen.driver') == url()->current() ? '#' : route('admin.manajemen.driver')}}" class="list-group-item list-group-item-action bg-light"> <i class="fa fa-motorcycle"></i> Manajemen Driver</a>
@@ -60,8 +60,8 @@
           </ul>
         </div>
       </nav>
-
       <div class="container-fluid">
+        @yield('breadcrumb')
         @yield('content')
       </div>
     </div>

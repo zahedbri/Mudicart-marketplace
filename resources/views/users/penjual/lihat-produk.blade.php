@@ -1,4 +1,14 @@
 @extends('users.penjual.include.penjual-navbar')
+
+@section('breadcrumb')
+    <div class="mt-4">
+        <nav class="breadcrumb">
+        <a class="breadcrumb-item" href="{{route('penjual.dashboard')}}">Dashboard</a>
+        <span class="breadcrumb-item active">Manajemen Produk</span>
+        </nav>
+    </div>
+@endsection
+
 @section('content')
 @if (Session::has('success'))
     <div class="alert alert-success mt-2" role="alert">
@@ -9,7 +19,10 @@
     <div class="row mt-3">
         <div class="col-md-4">
             <div class="card">
-                <img src="https://hatrabbits.com/wp-content/uploads/2017/01/random.jpg" alt="" class="img img-fluid">
+                @php
+                    $imgsrc = $produk->gallery->isEmpty() ? asset('img/product.jpg') : asset('storage/foto_produk/'.$produk->gallery->first()->foto_produk);
+                @endphp
+                <img src="{{$imgsrc}}" alt="" class="img img-fluid">
                 <div class="card-body">
                     <div class="card-title">
                         <h4>{{$produk->nama_produk}}</h3>

@@ -18,4 +18,9 @@ class Penjual extends Model
     public function produk(){
         return $this->hasMany('App\Produk');
     }
+
+    public function urlFoto()
+    {
+        return empty($this->foto_profil) ? asset('img/default.jpg') : asset('storage/foto_profil/'.$this->foto_profil);
+    }
 }

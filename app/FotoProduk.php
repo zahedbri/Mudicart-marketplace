@@ -13,4 +13,9 @@ class FotoProduk extends Model
     {
         return asset('storage/foto_produk/'.$this->foto_produk);
     }
+
+    public function produk()
+    {
+        return $this->belongsTo('App\Produk');
+    }
 }

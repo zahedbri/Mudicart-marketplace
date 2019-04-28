@@ -1,6 +1,18 @@
 @extends('users.penjual.include.penjual-navbar')
+
+@section('breadcrumb')
+    <div class="mt-4">
+        <nav class="breadcrumb">
+        <a class="breadcrumb-item" href="{{route('penjual.dashboard')}}">Dashboard</a>
+        <a class="breadcrumb-item" href="{{route('produk.edit',[request('produk')])}}">Manajemen Produk</a>
+        <span class="breadcrumb-item active">Galeri Foto</span>
+        </nav>
+    </div>
+@endsection
+
 @section('content')
-  <div class="row my-3">
+@include('users.penjual.include.alerts')
+  <div class="row">
     <div class="col-md-12 my-2">
       <div class="card">
         <div class="card-body">
@@ -12,9 +24,6 @@
                   <label for="foto-produk">
                   <input id="input-upload" type="file" id="foto-produk" name="foto_produk" class="form-control-file" accept="image/jpeg,image/png,image/png" />
                 </div>
-                @if ($errors->has('foto_produk'))
-                  <p class="text-danger"> {{ $errors->first('foto_produk') }} </p>
-                @endif
                 <div class="clearfix"></div>
                 <button id="img-upload" type="submit" class="btn btn-primary float-right">Submit</button>
                 <div class="clearfix"></div>
@@ -37,7 +46,7 @@
                       <img src="{{asset($foto->url())}}" class="img img-fluid">
                     </a>
                     <div class="text-right mt-1">
-                      <a href="" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></a>
+                      <a href="{{route('photo.edit',[$foto->id])}}" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></a>
                       <button data-url="{{route('photo.delete',[$foto->id])}}" class="btn btn-danger btn-sm btn-delete"><i class="fas fa-trash-alt"></i></button>
                     </div>
                     <div class="clearfix"></div>

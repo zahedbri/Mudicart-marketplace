@@ -1,5 +1,16 @@
 @extends('users.admin.include.admin-navbar')
 @section('content')
+
+@section('breadcrumb')
+    <div class="mt-4">
+        <nav class="breadcrumb">
+            <a href="{{route('admin.dashboard')}}" class="breadcrumb-item">Dashboard</a>
+            <a href="{{route('admin.manajemen.driver')}}" class="breadcrumb-item">Manajemen Driver</a>
+            <span class="breadcrumb-item active">Profil Driver</span>
+        </nav>
+    </div>
+@endsection
+
 @if (Session::has('success'))
     <div class="alert alert-success mt-2" role="alert">
         <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
@@ -35,6 +46,8 @@
                             <div class="form-group">
                                 <label for="password">Password</label>
                                 <input type="password" name="password" id="password" class="form-control {{$errors->has('password') ? 'is-invalid' : ''}}" placeholder="Password">
+                                <small class="float-right">Kosongkan field bila tidak mengganti password</small>                                
+                                <div class="clearfix"></div>
                                 @if ($errors->has('password'))
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('password') }}</strong>
