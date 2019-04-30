@@ -23,6 +23,8 @@ class CreateDriversTable extends Migration
             $table->string("alamat",255);
             $table->boolean("telah_diverifikasi")->default(0);
             $table->string('foto_profil')->nullable();
+            $table->string('nomor_sim');
+            $table->string('foto_sim')->nullable();
             $table->timestamps();
         });
     }

@@ -1,3 +1,7 @@
+@section('breadcrumb-child')
+    <span class="breadcrum-item">Registrasi Driver</span>
+@endsection
+
 <div class="form-group row">
     <label for="plat" class="col-md-4 col-form-label text-md-right">Plat Nomor Kendaraan</label>
 
@@ -51,6 +55,38 @@
             <span class="invalid-feedback" role="alert">
                 <strong>{{ $errors->first('no_telp') }}</strong>
             </span>
+        @endif
+    </div>
+</div>
+
+<div class="form-group row">
+    <label class="col-md-4 col-form-label text-md-right" for="nomor_sim">Nomor Sim</label>
+    <div class="col-md-6">
+        <input type="text" id="nomor_sim" name="nomor_sim" value="{{old('nomor_sim')}} " class="form-control {{$errors->has('alamat') ? 'is-invalid' : ''}}" />
+        @if ($errors->has('nomor_sim'))
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $errors->first('nomor_sim') }}</strong>
+            </span>
+        @endif
+    </div>
+</div>
+
+<div class="form-group row">
+    <label class="col-md-4 col-form-label text-md-right" for="foto_profil">Foto Profil</label>
+    <div class="col-md-6">
+        <input type="file" id="foto_profil" name="foto_profil" value="{{old('foto_profil')}} " class="form-control-file {{$errors->has('alamat') ? 'is-invalid' : ''}}" />
+        @if ($errors->has('foto_profil'))
+        @endif
+        <p class="text-danger">{{ $errors->first('foto_profil') }}</p>
+    </div>
+</div>
+
+<div class="form-group row">
+    <label class="col-md-4 col-form-label text-md-right" for="foto_sim">Foto Sim</label>
+    <div class="col-md-6">
+        <input type="file" id="foto_sim" name="foto_sim" value="{{old('foto_sim')}} " class="form-control-file {{$errors->has('alamat') ? 'is-invalid' : ''}}" />
+        @if ($errors->has('foto_sim'))
+            <p class="text-danger">{{ $errors->first('foto_sim') }}</p>
         @endif
     </div>
 </div>

@@ -14,7 +14,6 @@ Route::get('/','MainMenuController@index');
 Route::get('produk/{produk}','MainMenuController@lihatProduk')->name('lihat.produk');
 
 
-
 Route::get('/home', 'HomeController@index')->name('home');
 
 // Auth::routes();

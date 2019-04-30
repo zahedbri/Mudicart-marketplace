@@ -1,4 +1,12 @@
 @extends('shared.layout')
+@section('breadcrumb')
+<div class="mt-4">
+    <nav class="breadcrumb">
+        <a href="{{url('/')}}" class="breadcrumb-item">Home</a>
+        <span class="breadcrumb-item active">Daftar Register</span>    
+    </nav>
+</div>
+@endsection
 @section('content')
     <div class="container">
         <div class="py-5">
