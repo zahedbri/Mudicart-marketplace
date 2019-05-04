@@ -18,14 +18,16 @@
                 <div class="p-2">
                     <div class="card shadow">
                         <a href="{{route('lihat.produk',[$item->id])}}" class="link-unstyled">
-                            <img style="min-height:150px;object-fit:cover;" class="img-fluid" src="{{$item->displayUrl()}}" alt="">
+                            <img style="min-height:150px;object-fit:cover;" class="img-fluid" src="{{displayUrl($item->display)}}" alt="">
                         </a>
                         <div class="card-body">
                             <hr>
                             <h5>{{$item->nama_produk}}</h5>
                             <i>{{$item->harga()."/".$item->satuan_unit}}</i>
                         </div>
-                        <button class="btn btn-primary btn-sm"><i class="fas fa-cart-plus"></i></button>
+                        @can('pembeli')
+                            <a href="{{route('tambah.produk',[$item->id])}}" class="btn btn-primary btn-sm"><i class="fas fa-cart-plus"></i></a>
+                        @endcan
                     </div>
                 </div>
             </div>

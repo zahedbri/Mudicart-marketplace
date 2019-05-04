@@ -28,15 +28,30 @@
         @yield('content')
 
       </div>
-          <footer class="d-block bg-dark py-2">
-            <div class="text-center text-light">
-                <ul class="list-inline text-center mb-0">
-                    @guest<li class="list-inline-item"><a href="{{route('register')}}">Register</a></li>
-                    <li class="list-inline-item"><a href="{{route('login')}}">Login</a></li>@endguest
-                    @auth <li class="list-inline-item"><a href="{{Auth::user()->dashboardUrl()}}">Dashboard</a></li> @endauth
-                 </ul>
-              Dapurpedia &copy; 2019 
-            </div>
-          </footer>
+      <footer class="d-block bg-dark py-2">
+        <div class="text-center text-light">
+            <ul class="list-inline text-center mb-0">
+                @guest<li class="list-inline-item"><a href="{{route('register')}}">Register</a></li>
+                <li class="list-inline-item"><a href="{{route('login')}}">Login</a></li>@endguest
+                @auth <li class="list-inline-item"><a href="{{Auth::user()->dashboardUrl()}}">Dashboard</a></li> @endauth
+                @auth
+                <li class="list-inline-item">
+                    <a href="{{ route('logout') }}"
+                    onclick="event.preventDefault();
+                                    document.getElementById('logout-form').submit();">
+                    Logout
+                </a>
+                </li>
+                @endauth         
+            </ul>
+            @auth
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                @csrf
+            </form>
+            @endauth
+          Dapurpedia &copy; 2019 
+        </div>
+      </footer>
+      @yield('js')
 </body>
 </html>

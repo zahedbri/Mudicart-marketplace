@@ -14,4 +14,9 @@ class Pembeli extends Model
     {
         return $this->belongsTo("App\User");
     }
+
+    public function keranjang()
+    {
+        return $this->hasMany('App\Keranjang');
+    }
 }

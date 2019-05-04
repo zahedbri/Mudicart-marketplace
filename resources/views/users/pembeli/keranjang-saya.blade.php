@@ -26,7 +26,7 @@
                         <td>{{$item['subtotal']}}</td>
                         <td>
                             <button class="btn btn-danger" title="Hapus Belanjaan"><i class="fas fa-trash-alt"></i></button>
-                            <a href="" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a>
+                            <a href="{{route('keranjang.detail',[$item['keranjang_id']])}}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a>
                         </td>
                     </tr>
                     @empty

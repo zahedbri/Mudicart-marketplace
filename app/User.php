@@ -69,11 +69,12 @@ class User extends Authenticatable
             case UserLevel::PENJUAL:
                 return route('penjual.dashboard');
             case UserLevel::PEMBELI:
-                return route('pembeli.dashboard');
+                return route('dashboard');
             case UserLevel::SUPERADMIN:
                 return route('admin.dashboard');
             default:
                 return '#';
         }
     }
+
 }
