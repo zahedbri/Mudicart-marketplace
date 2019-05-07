@@ -10,6 +10,12 @@
 
 @section('content')
     <div style="min-height:65vh" class="container">
+        @if(Session::has('success'))
+        <div class="alert alert-success" role="alert">
+            <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+            {{Session::get('success')}}
+        </div>
+        @endif
         <div class="table-responsive">
             <table class="table table-striped">
                 <thead>
@@ -25,7 +31,7 @@
                         <td>{{$item['jumlah_produk']}}</td>
                         <td>{{$item['subtotal']}}</td>
                         <td>
-                            <button class="btn btn-danger" title="Hapus Belanjaan"><i class="fas fa-trash-alt"></i></button>
+                            <button data-url="{{route('keranjang.hapus',[$item['keranjang_id']])}}" class="btn btn-danger btn-delete-cart" title="Hapus Belanjaan"><i class="fas fa-trash-alt"></i></button>
                             <a href="{{route('keranjang.detail',[$item['keranjang_id']])}}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a>
                         </td>
                     </tr>
@@ -36,6 +42,27 @@
                     @endforelse
                 </tbody>
             </table>
+            <form action="" method="POST" id="delete-cart">@csrf</form>
         </div>
     </div>
+@endsection
+
+@section('js')
+    <script>
+        $('.btn-delete-cart').click(function(){
+            swal({
+                title: "Menghapus Keranjang",
+                text: "Apakah anda ingin menghapus keranjang beserta isinya?",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            }).then((val)=>{
+                if(val){
+                    formdel = $('form#delete-cart');
+                    formdel.attr('action',$(this).data('url'));
+                    formdel.submit();
+                }
+            });
+        });
+    </script>
 @endsection

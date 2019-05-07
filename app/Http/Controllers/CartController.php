@@ -21,13 +21,10 @@ class CartController extends Controller
                 }]);
             }]);
         }]);
-
-
         $daftarBelanja = collect([]);
         
         foreach($user->pembeli->keranjang as $key => $keranjang)
         {
-            $keranjang;
             $subtotal = 0;
             $jumlahProduk = 0;
             $penjual = $keranjang->penjual->user->nama;
@@ -41,7 +38,8 @@ class CartController extends Controller
                     'keranjang_id' => $keranjang->id,
                     'penjual' => $penjual,
                     'subtotal' => $subtotal,
-                    'jumlah_produk' => $jumlahProduk
+                    'jumlah_produk' => $jumlahProduk,
+                    
                 ]
             );
             $daftarBelanja->put($key,$subKeranjang);
@@ -57,12 +55,20 @@ class CartController extends Controller
             ->where('telah_diselesaikan',0)
             ->where('penjual_id',$produk->penjual_id)
             ->first();
+        
+        $punyaProduk = ["punya_produk"=>false,"jumlah"=>0];
+
         if(!is_null($keranjang))
         {
-            $belanjaan = Item::select('tb_produk.id as produk_id','tb_belanjaan.harga as harga',DB::raw('tb_belanjaan.harga * tb_belanjaan.jumlah as sub_total'),'tb_produk.nama_produk','tb_belanjaan.id as item_id','tb_produk.satuan_unit')->join('tb_produk','tb_produk.id','tb_belanjaan.produk_id')->where('keranjang_id',$keranjang->id)->get();
+            $belanjaan = Item::select('tb_produk.id as produk_id','tb_belanjaan.harga as harga','jumlah',DB::raw('tb_belanjaan.harga * tb_belanjaan.jumlah as sub_total'),'tb_produk.nama_produk','tb_belanjaan.id as item_id','tb_produk.satuan_unit')->join('tb_produk','tb_produk.id','tb_belanjaan.produk_id')->where('keranjang_id',$keranjang->id)->get();
+            $filter = $belanjaan->where('produk_id',$produk->id);
+            if(!$filter->isEmpty())
+            {
+                $punyaProduk["punya_produk"] = true;
+                $punyaProduk["jumlah"] = $filter->first()->jumlah;
+            }
         }
-
-        return view('users.pembeli.tambah-keranjang',['belanjaan'=> $belanjaan ?? [],'produk'=>$produk]);
+        return view('users.pembeli.tambah-keranjang',['belanjaan'=> $belanjaan ?? [],'produk'=>$produk, 'punyaProduk'=>$punyaProduk]);
     }
 
     public function tambahKeranjang(BelanjaRequest $request, Produk $produk)
@@ -100,4 +106,22 @@ class CartController extends Controller
         
         return view('users.pembeli.keranjang',compact('keranjang'));
     }
+
+    public function hapusItem(Keranjang $keranjang, Item $item)
+    {
+        $item->delete();
+        if(!$keranjang->count()){
+            $keranjang->delete();
+            return redirect()->route('keranjang')->with('success','Item berhasil dihapus');
+        }
+        return redirect()->back()->with('success','Item keranjang berhasil dihapus');
+    }
+    
+    public function hapusKeranjang(Keranjang $keranjang)
+    {
+        $keranjang->belanjaan()->delete();
+        $keranjang->delete();
+        return redirect()->back()->with('success','Keranjang berhasil dihapus');
+    }
+
 }

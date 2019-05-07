@@ -71,7 +71,9 @@
                 @forelse($penjual->produk as $item)
                 <div class="col-md-3 my-2">
                     <div class="card">
-                        <img src="{{gambarDefaultProduk($item)}}" alt="" class="img-fluid mh-25">
+                        <a href="{{route('tambah.produk',[$item->id])}}">
+                            <img src="{{gambarDefaultProduk($item)}}" alt="" class="img-fluid mh-25">
+                        </a>
                         <div class="card-body">
                             <p class="text-center">{{$item->nama_produk}}</p>
                         </div>

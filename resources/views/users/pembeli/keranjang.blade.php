@@ -12,8 +12,13 @@
 
 @section('content')
     <div style="min-height:65vh" class="container">
+        @if(Session::has('success'))
+        <div class="alert alert-success" role="alert">
+            <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+            {{Session::get('success')}}
+        </div>
+        @endif
         <h5 class="mb-3">Detail Keranjang</h5>
-        
         <div class="table-responsive">
             <table class="table table-striped">
                 <thead>
@@ -33,7 +38,7 @@
                         <td>{{formatRP($item->harga)}}</td>
                         <td>{{formatRP($subtotal)}}</td>
                         <td>
-                            <button class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+                            <button data-url="{{route('hapus.item',[$keranjang->id,$item->id])}}" class="btn btn-delete-item btn-danger"><i class="fas fa-trash-alt"></i></button>
                             <a href="{{route('tambah.produk',[$item->produk_id])}}" class="btn btn-primary"><i class="fas fa-arrow-right"></i></a>
                         </td>
                     </tr>
@@ -47,7 +52,28 @@
                     </tfoot>
                 </tbody>
             </table>
+            <form id="delete-item" action="" method="POST">@csrf</form>
         </div>
 
     </div>
+@endsection
+
+@section('js')
+    <script>
+        $(".btn-delete-item").click(function(){
+            swal({
+                title: "Menghapus Item pada keranjang",
+                text: "Apakah anda yakin?",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            }).then((val)=>{
+                if(val){
+                    formdel = $('form#delete-item');
+                    formdel.attr('action',$(this).data('url'));
+                    formdel.submit();
+                }
+            });
+        });
+    </script>
 @endsection

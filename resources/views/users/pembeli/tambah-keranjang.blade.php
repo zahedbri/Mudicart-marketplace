@@ -58,7 +58,7 @@
                                 <div class="input-group-prepend">
                                     <button type="button" id="btn-minus" class="btn btn-outline-danger"><i class="fas fa-minus"></i></button>
                                 </div>
-                                <input value="{{old('jumlah') ?? '0'}}" name="jumlah" id="input-number" type="text" class="form-control">
+                                <input value="{{$punyaProduk['punya_produk'] ?  $punyaProduk['jumlah'] : 0}}" name="jumlah" id="input-number" type="text" class="form-control">
                                 <div class="input-group-append">
                                     <button type="button" id="btn-plus" class="btn btn-outline-success"><i class="fas fa-plus"></i></button>
                                 </div>
@@ -80,6 +80,9 @@
             </div>
             <div class="row">
             @forelse($belanjaan as $item)
+            @if($produk->id == $item->produk_id)
+                @continue
+            @endif
                 <div class="col-md-3 mb-2">
                     <div class="card">
                         <div class="card-header">
@@ -91,7 +94,7 @@
                             </ul>
                         </div>
         
-                        <button class="btn btn-sm btn-primary float-right"><i class="fas fa-pencil-alt"></i></button>
+                        <a href="{{route('tambah.item',[$item->produk_id])}}" class="btn btn-sm btn-primary float-right"><i class="fas fa-pencil-alt"></i></a>
                     </div>
                 </div>
             @empty

@@ -17,6 +17,9 @@ Route::group(['middleware'=>['can:pembeli']],function(){
     Route::post('tambah-keranjang/{produk}','CartController@tambahKeranjang')->name('tambah.item');
     Route::get('keranjang-saya','CartController@keranjangSaya')->name('keranjang');
     Route::get('keranjang/{keranjang}','CartController@detailKeranjang')->name('keranjang.detail');
+    Route::post('keranjang/{keranjang}/hapus','CartController@hapusKeranjang')->name('keranjang.hapus');
+    Route::post('keranjang/{keranjang}/hapus/{item}','CartController@hapusItem')->name('hapus.item');
+    
 });
 
 

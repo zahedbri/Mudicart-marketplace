@@ -14,6 +14,8 @@ class Keranjang extends Model
         return $this->hasMany("App\Item");
     }
 
+    
+
     public function penjual()
     {
         return $this->belongsTo('App\Penjual');
