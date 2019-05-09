@@ -26,7 +26,7 @@
                                 </div>
                                 @empty
                                 <div class="carousel-item active">
-                                    <img class="d-block w-100" src="{{$produk->displayUrl()}}">
+                                <img class="d-block w-100" src="{{gambarDefaultProduk()}}">
                                 </div>
                                 @endforelse
                             </div>
@@ -52,7 +52,9 @@
                         <li class="list-group-item">
                             <div>{{$produk->deskripsi()}}</div>
                             <div class="clearfix"></div>
-                            <div class="float-right"><button class="btn btn-sm btn-primary"><i class="fas fa-cart-plus"></i> Tambahkan Ke Keranjang</button></div>
+                            @can('pembeli')
+                            <div class="float-right"><a href="{{route('tambah.produk',[$produk->id])}}" class="btn btn-sm btn-primary"><i class="fas fa-cart-plus"></i> Tambahkan Ke Keranjang</a></div>
+                            @endcan
                         </li>
                     </ul>
                 </div>
@@ -69,7 +71,9 @@
                 @forelse($penjual->produk as $item)
                 <div class="col-md-3 my-2">
                     <div class="card">
-                        <img src="{{$item->displayUrl()}}" alt="" class="img-fluid mh-25">
+                        <a href="{{route('tambah.produk',[$item->id])}}">
+                            <img src="{{gambarDefaultProduk($item)}}" alt="" class="img-fluid mh-25">
+                        </a>
                         <div class="card-body">
                             <p class="text-center">{{$item->nama_produk}}</p>
                         </div>

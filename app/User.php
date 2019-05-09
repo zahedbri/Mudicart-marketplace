@@ -6,6 +6,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Carbon\Carbon;
+use App\Enums\UserLevel;
 
 class User extends Authenticatable
 {
@@ -59,4 +60,21 @@ class User extends Authenticatable
         $tanggal = Carbon::parse($this->created_at);
         return $tanggal->isoFormat("d MMMM Y");
     }
+
+    public function dashboardUrl()
+    {
+        switch($this->jenis){
+            case UserLevel::DRIVER:
+                return route('driver.dashboard');
+            case UserLevel::PENJUAL:
+                return route('penjual.dashboard');
+            case UserLevel::PEMBELI:
+                return route('dashboard');
+            case UserLevel::SUPERADMIN:
+                return route('admin.dashboard');
+            default:
+                return '#';
+        }
+    }
+
 }

@@ -9,7 +9,7 @@ class MainMenuController extends Controller
 {
     public function index()
     {
-        $produk = Produk::limit('8')->inRandomOrder()->get();
+        $produk = Produk::limit('8')->inRandomOrder()->with(['display'])->get();
         return view('produk',compact('produk'));
     }
 
@@ -17,7 +17,7 @@ class MainMenuController extends Controller
     {
         $produk->load(['penjual','gallery']);
         $penjual = $produk->penjual->load(['produk'=>function($query) use ($produk){
-            $query->where('id','<>',$produk->id)->inRandomOrder()->limit(10)->get();
+            $query->where('id','<>',$produk->id)->inRandomOrder()->limit(10)->with(['display']);
         },'user']);
         return view('detail-produk',['produk'=>$produk, 'penjual'=>$penjual]);
     }

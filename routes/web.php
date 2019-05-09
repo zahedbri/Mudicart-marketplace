@@ -10,8 +10,18 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/','MainMenuController@index');
+Route::get('/','MainMenuController@index')->name('dashboard');
 Route::get('produk/{produk}','MainMenuController@lihatProduk')->name('lihat.produk');
+Route::group(['middleware'=>['can:pembeli']],function(){
+    Route::get('tambah-keranjang/{produk}','CartController@lihatProduk')->name('tambah.produk');
+    Route::post('tambah-keranjang/{produk}','CartController@tambahKeranjang')->name('tambah.item');
+    Route::get('keranjang-saya','CartController@keranjangSaya')->name('keranjang');
+    Route::get('keranjang/{keranjang}','CartController@detailKeranjang')->name('keranjang.detail');
+    Route::post('keranjang/{keranjang}/hapus','CartController@hapusKeranjang')->name('keranjang.hapus');
+    Route::post('keranjang/{keranjang}/hapus/{item}','CartController@hapusItem')->name('hapus.item');
+    
+});
+
 
 
 

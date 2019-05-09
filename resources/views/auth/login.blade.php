@@ -1,7 +1,15 @@
 @extends('shared.layout')
 @section('title', 'Login')
+
+
 @section('content')
 <div class="container my-5">
+    @if(Session::has('success'))
+    <div class="alert alert-success" role="alert">
+        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+        {{Session::get('success')}}
+    </div>
+    @endif
     <div class="card" style="width: 50%; margin: auto">
         <div class="card-header">
             <i class="fa fa-sign-in"></i>
@@ -35,6 +43,15 @@
                 
                     <div class='invalid-feedback'>
                         {{ $errors->first('password') }}
+                    </div>
+                </div>
+
+                <div class='form-group'>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
+                        <label class="form-check-label" for="remember">
+                            Tetap Masuk
+                        </label>
                     </div>
                 </div>
 

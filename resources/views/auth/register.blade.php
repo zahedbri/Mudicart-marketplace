@@ -1,5 +1,13 @@
 @extends('shared.layout')
-
+@section('breadcrumb')
+<div class="mt-4">
+    <nav class="breadcrumb">
+        <a href="{{url('/')}}" class="breadcrumb-item">Home</a>
+        <a href="{{route('register.index')}}" class="breadcrumb-item">Daftar Register</a>
+        <span class="breadcrumb-item active">Daftar {{ucfirst(request('jenis'))}}</span>        
+    </nav>
+</div>
+@endsection
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -8,7 +16,7 @@
                 <div class="card-header">Register {{$jenis}}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="">
+                    <form method="POST" action="" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group row">
                             <label for="name" class="col-md-4 col-form-label text-md-right">Nama</label>

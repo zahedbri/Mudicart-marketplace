@@ -45,7 +45,7 @@ class LoginController extends Controller
             case UserLevel::PENJUAL:
                 return route('penjual.dashboard');
             case UserLevel::PEMBELI:
-                return route('pembeli.dashboard');
+                return route('dashboard');
             case UserLevel::DRIVER:
                 return route('driver.dashboard');
             default :
