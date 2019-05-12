@@ -7,7 +7,10 @@
     </div>
 @endsection
 @section('content')
-    @foreach($daftarProduk as $produk)
-        @include('users.penjual.include.produk')
-    @endforeach
+    <div class="w-75">
+        <h1>Daftar Produk Anda</h1>
+        @foreach($daftarProduk as $produk)
+            @include('users.penjual.include.produk')
+        @endforeach
+    </div>
 @endsection

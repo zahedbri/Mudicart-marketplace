@@ -3,12 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Produk;
 use App\Keranjang;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Requests\BelanjaRequest;
-use App\Item;
-use Illuminate\Support\Facades\DB;
 
 class CartController extends Controller
 {
@@ -48,56 +44,6 @@ class CartController extends Controller
         return view('users.pembeli.keranjang-saya',compact('daftarBelanja'));
     }
 
-    public function lihatProduk(Produk $produk)
-    {
-        $user = Auth::user()->load(['pembeli']);
-        $keranjang = Keranjang::where('pembeli_id',$user->pembeli->id)
-            ->where('telah_diselesaikan',0)
-            ->where('penjual_id',$produk->penjual_id)
-            ->first();
-        
-        $punyaProduk = ["punya_produk"=>false,"jumlah"=>0];
-
-        if(!is_null($keranjang))
-        {
-            $belanjaan = Item::select('tb_produk.id as produk_id','tb_belanjaan.harga as harga','jumlah',DB::raw('tb_belanjaan.harga * tb_belanjaan.jumlah as sub_total'),'tb_produk.nama_produk','tb_belanjaan.id as item_id','tb_produk.satuan_unit')->join('tb_produk','tb_produk.id','tb_belanjaan.produk_id')->where('keranjang_id',$keranjang->id)->get();
-            $filter = $belanjaan->where('produk_id',$produk->id);
-            if(!$filter->isEmpty())
-            {
-                $punyaProduk["punya_produk"] = true;
-                $punyaProduk["jumlah"] = $filter->first()->jumlah;
-            }
-        }
-        return view('users.pembeli.tambah-keranjang',['belanjaan'=> $belanjaan ?? [],'produk'=>$produk, 'punyaProduk'=>$punyaProduk]);
-    }
-
-    public function tambahKeranjang(BelanjaRequest $request, Produk $produk)
-    {
-        $user = Auth::user()->load(['pembeli']);
-        $keranjang = Keranjang::where('pembeli_id',$user->pembeli->id)
-            ->where('telah_diselesaikan',0)
-            ->where('penjual_id',$produk->penjual_id)
-            ->with(['belanjaan'])
-            ->get();
-
-        if($keranjang->isEmpty()){
-            $keranjang = $user->pembeli->keranjang()->save(new Keranjang(['penjual_id'=>$produk->penjual_id]));
-        } else {
-            $keranjang = $keranjang->first();
-        }
-        Item::updateOrCreate(
-            [
-                'produk_id' => $produk->id,
-                'keranjang_id' => $keranjang->id
-            ],
-            [
-                'jumlah' => $request->jumlah,
-                'harga' => $produk->harga
-            ]
-        );
-        return redirect()->back()->with('success','Item berhasil ditambah !');
-    }
-
     public function detailKeranjang(Keranjang $keranjang)
     {
         $keranjang->load(['belanjaan'=>function($query){
@@ -107,21 +53,34 @@ class CartController extends Controller
         return view('users.pembeli.keranjang',compact('keranjang'));
     }
 
-    public function hapusItem(Keranjang $keranjang, Item $item)
-    {
-        $item->delete();
-        if(!$keranjang->count()){
-            $keranjang->delete();
-            return redirect()->route('keranjang')->with('success','Item berhasil dihapus');
-        }
-        return redirect()->back()->with('success','Item keranjang berhasil dihapus');
-    }
-    
     public function hapusKeranjang(Keranjang $keranjang)
     {
         $keranjang->belanjaan()->delete();
         $keranjang->delete();
         return redirect()->back()->with('success','Keranjang berhasil dihapus');
+    }
+
+    public function checkoutKeranjang(Keranjang $keranjang)
+    {
+        $keranjang->checkout();
+        return redirect()->back()->with('success','Transaksi anda telah diselesaikan, menunggu konfirmasi Penjual.');
+    }
+
+    public function lihatTransaksiBerjalan()
+    {
+        $user = Auth::user()->load(['pembeli']);
+        $keranjang = Keranjang::where('pembeli_id',$user->pembeli->id)
+            ->where('telah_diselesaikan',1)
+            ->with([
+                'belanjaan'=>function($query){
+                    $query->with(['produk']);
+                },
+                'penjual'=>function($query){
+                    $query->with(['user']);
+                }
+            ])
+            ->get();
+        return view('users.pembeli.keranjang-diproses',compact('keranjang'));
     }
 
 }

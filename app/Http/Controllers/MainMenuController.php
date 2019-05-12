@@ -9,7 +9,7 @@ class MainMenuController extends Controller
 {
     public function index()
     {
-        $produk = Produk::limit('8')->inRandomOrder()->with(['display'])->get();
+        $produk = Produk::limit('8')->where('tersedia',1)->inRandomOrder()->with(['display'])->get();
         return view('produk',compact('produk'));
     }
 

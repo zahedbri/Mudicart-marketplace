@@ -10,13 +10,9 @@ class CartPolicy
 {
     use HandlesAuthorization;
 
-    /**
-     * Create a new policy instance.
-     *
-     * @return void
-     */
     public function delete(User $user, Keranjang $keranjang)
     {
         return $user->pembeli->id == $keranjang->pembeli_id && !$keranjang->telah_diselesaikan && !$keranjang->sedang_diproses;
     }
+
 }

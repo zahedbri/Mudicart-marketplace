@@ -14,6 +14,7 @@
 @section('content')
 <div class="container w-75">
     <div class="mt-5">
+        <h1>Informasi Produk</h1>
         <div class="row">
             <div class="col-md-5">
                 <div class="p-2  bg-secondary border rounded">
@@ -47,13 +48,19 @@
                 <div class="border">
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item"><strong>{{$produk->nama_produk}}</strong></li>
+                        @if($produk->tersedia)
                         <li class="list-group-item">Tersedia &#177; {{$produk->jumlah_tersedia}} {{$produk->satuan_unit}}</li>
+                        @else
+                        <li class="list-group-item">Produk tidak tersedia.</li>
+                        @endif
                         <li class="list-group-item">{{$produk->harga()}}/{{$produk->satuan_unit}}</li>
                         <li class="list-group-item">
                             <div>{{$produk->deskripsi()}}</div>
                             <div class="clearfix"></div>
                             @can('pembeli')
+                            @if($produk->tersedia)
                             <div class="float-right"><a href="{{route('tambah.produk',[$produk->id])}}" class="btn btn-sm btn-primary"><i class="fas fa-cart-plus"></i> Tambahkan Ke Keranjang</a></div>
+                            @endif
                             @endcan
                         </li>
                     </ul>
@@ -71,7 +78,7 @@
                 @forelse($penjual->produk as $item)
                 <div class="col-md-3 my-2">
                     <div class="card">
-                        <a href="{{route('tambah.produk',[$item->id])}}">
+                        <a href="{{route('lihat.produk',[$item->id])}}">
                             <img src="{{gambarDefaultProduk($item)}}" alt="" class="img-fluid mh-25">
                         </a>
                         <div class="card-body">

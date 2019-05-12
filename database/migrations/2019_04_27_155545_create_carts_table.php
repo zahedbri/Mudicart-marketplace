@@ -21,6 +21,7 @@ class CreateCartsTable extends Migration
             $table->foreign('penjual_id')->references('id')->on('tb_penjual');
             $table->boolean('sedang_diproses')->default(0);
             $table->boolean('telah_diselesaikan')->default(0);
+            $table->boolean('telah_dikonfirmasi')->default(0);
             $table->timestamps();
         });
     }

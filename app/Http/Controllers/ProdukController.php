@@ -18,12 +18,19 @@ class ProdukController extends Controller
 
     public function edit(Produk $produk)
     {
+        $this->authorize('ProdukEdit',$produk);
         return view('users.penjual.lihat-produk', compact('produk'));
     }
 
     public function update(ProdukRequest $request, Produk $produk)
     {
+        $this->authorize('ProdukUpdate',$produk);
         $produk->update($request->all());
         return redirect()->back()->with('success', 'Produk ' . $produk->nama_produk . ' berhasil diperbaharui !');
+    }
+
+    public function updateKetersediaan(Produk $produk)
+    {
+        $produk->gantiKetersediaan();
     }
 }

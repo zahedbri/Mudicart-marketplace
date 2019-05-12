@@ -13,13 +13,14 @@
 Route::get('/','MainMenuController@index')->name('dashboard');
 Route::get('produk/{produk}','MainMenuController@lihatProduk')->name('lihat.produk');
 Route::group(['middleware'=>['can:pembeli']],function(){
-    Route::get('tambah-keranjang/{produk}','CartController@lihatProduk')->name('tambah.produk');
-    Route::post('tambah-keranjang/{produk}','CartController@tambahKeranjang')->name('tambah.item');
+    Route::get('tambah-keranjang/{produk}','ItemController@lihatProduk')->name('tambah.produk');
+    Route::post('tambah-keranjang/{produk}','ItemController@tambahKeranjang')->name('tambah.item');
     Route::get('keranjang-saya','CartController@keranjangSaya')->name('keranjang');
     Route::get('keranjang/{keranjang}','CartController@detailKeranjang')->name('keranjang.detail');
     Route::post('keranjang/{keranjang}/hapus','CartController@hapusKeranjang')->name('keranjang.hapus');
-    Route::post('keranjang/{keranjang}/hapus/{item}','CartController@hapusItem')->name('hapus.item');
-    
+    Route::post('keranjang/{keranjang}/hapus/{item}','ItemController@hapusItem')->name('hapus.item');
+    Route::post('keranjang/{keranjang}/checkout','CartController@checkoutKeranjang')->name('keranjang.checkout');
+    Route::get('keranjang-saya/diproses','CartController@lihatTransaksiBerjalan')->name('keranjang.diproses');
 });
 
 
@@ -77,6 +78,11 @@ Route::group(['middleware'=>['can:penjual'], 'prefix'=>'penjual'],function(){
     Route::prefix('profil')->group(function(){
         Route::get('/','PenjualController@editProfil')->name('profil.edit');
         Route::post('/','PenjualController@updateProfil')->name('profil.update');
+    });
+
+    Route::prefix('permintaan')->group(function(){
+        Route::get('/','PermintaanController@lihatPermintaan')->name('permintaan');
+        Route::get('/{keranjang}/detail','PermintaanController@lihatDetail')->name('permintaan.detail');
     });
 
     

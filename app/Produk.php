@@ -39,4 +39,10 @@ class Produk extends Model
         return nl2br($this->deskripsi);
     }
 
+    public function gantiKetersediaan()
+    {
+        $this->tersedia = $this->tersedia ? 0 : 1;
+        $this->save();
+    }
+
 }

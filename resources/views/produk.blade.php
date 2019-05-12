@@ -26,7 +26,9 @@
                             <i>{{$item->harga()."/".$item->satuan_unit}}</i>
                         </div>
                         @can('pembeli')
+                            @if($item->tersedia)
                             <a href="{{route('tambah.produk',[$item->id])}}" class="btn btn-primary btn-sm"><i class="fas fa-cart-plus"></i></a>
+                            @endif
                         @endcan
                     </div>
                 </div>

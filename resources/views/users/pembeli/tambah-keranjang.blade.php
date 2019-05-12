@@ -13,6 +13,7 @@
 
 @section('content')
 <div class="container w-75">
+    <h1>Tambah Keranjang</h1>
         @include('users.pembeli.include.alerts')
         <div class="row mt-2">
             <div class="col-md-5">
@@ -52,6 +53,7 @@
                             <div>{{$produk->deskripsi()}}</div>
                         </li>
                         <li class="list-group-item">
+                            @if($produk->tersedia)
                             <form action="" method="POST">
                                 @csrf
                             <div class="input-group">
@@ -66,6 +68,9 @@
                             <div class="clearfix"></div>
                             <button type="submit" class="btn btn-primary float-right mt-2"><i class="fas fa-cart-plus"></i> Tambah</button>
                             </form>
+                            @else 
+                                <p>Produk sedang tidak tersedia.</p>
+                            @endif
                         </li>
                     </ul>
                 </div>
@@ -73,16 +78,12 @@
         </div>
         <div class="container my-4">
             <hr>
+            
             <div class="row">
-                <h5 class="text-center text-info m-4">
-                    <a href="{{route('keranjang')}}">Produk di keranjang Anda</a>
-                </h5>
-            </div>
-            <div class="row">
+                <div class="col-md-12 mb-2">
+                    <h3 class="text-center">Produk {{$produk->penjual->user->nama}}, di keranjang Anda</h3>
+                </div>
             @forelse($belanjaan as $item)
-            @if($produk->id == $item->produk_id)
-                @continue
-            @endif
                 <div class="col-md-3 mb-2">
                     <div class="card">
                         <div class="card-header">
@@ -90,11 +91,12 @@
                         </div>
                         <div class="card-body">
                                 <p>{{$item->harga."/".ucfirst($item->satuan_unit)}}</p>
-                                <p>{{$item->sub_total}}</p>
+                                <p>{{formatRP($item->sub_total)}}</p>
                             </ul>
                         </div>
-        
-                        <a href="{{route('tambah.item',[$item->produk_id])}}" class="btn btn-sm btn-primary float-right"><i class="fas fa-pencil-alt"></i></a>
+                        @if($item->produk_id != $produk->id)
+                        <a href="{{route('tambah.item',[$item->produk_id])}}" class="btn btn-sm btn-primary float-right"><i class="fas fa-pencil-alt"></i> Ubah</a>
+                        @endif
                     </div>
                 </div>
             @empty
@@ -103,7 +105,7 @@
                     <div class="card-header text-center">
                         <strong>Daftar Belanjaan</strong>
                     </div>
-                    <div class="card-body">Anda belum memiliki daftar belanja.</div>
+                    <div class="card-body">Anda belum memiliki daftar belanja dengan penjual.</div>
                 </div>
             </div>
             @endforelse

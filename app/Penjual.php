@@ -23,4 +23,10 @@ class Penjual extends Model
     {
         return empty($this->foto_profil) ? asset('img/default.jpg') : asset('storage/foto_profil/'.$this->foto_profil);
     }
+
+    public function permintaan()
+    {
+        return $this->hasMany('App\Keranjang');
+    }
+
 }

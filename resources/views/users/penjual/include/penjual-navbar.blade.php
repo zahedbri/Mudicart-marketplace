@@ -24,7 +24,7 @@
       <a class="link-unstyled" href="{{url('/')}}"><div class="sidebar-heading">Dapurpedia</div></a>
       <div class="list-group list-group-flush">
         <a href="{{route('penjual.dashboard') == url()->current() ? '#' : route('penjual.dashboard')}}" class="list-group-item list-group-item-action bg-light"> <i class="fa fa-home"></i> Menu Utama</a>
-        <a href="#" class="list-group-item list-group-item-action bg-light"> <i class="fa fa-list"></i> Permintaan</a>
+        <a href="{{route('permintaan') == url()->current() ? '#' : route('permintaan')}}" class="list-group-item list-group-item-action bg-light"> <i class="fa fa-list"></i> Permintaan</a>
         <a href="{{route('profil.edit') == url()->current() ? '#' : route('profil.edit')}}" class="list-group-item list-group-item-action bg-light"> <i class="fas fa-user"></i> </i> Profil Saya</a>
         <a href="#" class="list-group-item list-group-item-action bg-light"> <i class="fas fa-phone"></i> Hubungi Admin</a>
       </div>
@@ -62,7 +62,7 @@
       </nav>
       <div class="container">
         @yield('breadcrumb')
-        <div class="w-75">
+        <div class="">
           @yield('content')
         </div>
       </div>

@@ -25,6 +25,6 @@ if (!function_exists('gambarDefaultProfil')) {
 if (!function_exists('formatRP')) {
     function formatRP($harga)
     {
-        return 'Rp. '.number_format($harga,0,',','.');
+        return 'Rp '.number_format($harga,0,',','.');
     }
 }
