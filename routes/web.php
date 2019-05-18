@@ -23,10 +23,8 @@ Route::group(['middleware'=>['can:pembeli']],function(){
     Route::get('keranjang-saya/diproses','CartController@lihatTransaksiBerjalan')->name('keranjang.diproses');
 });
 
-
-
-
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('driver/{driver}','DriverController@profil')->middleware('auth')->name('driver.profil');
 
 // Auth::routes();
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
@@ -66,6 +64,7 @@ Route::group(['middleware'=>['can:penjual'], 'prefix'=>'penjual'],function(){
     Route::get('/','ProdukController@index')->name('penjual.dashboard');
     Route::get('manajemen-produk/{produk}','ProdukController@edit')->name('produk.edit');
     Route::post('manajemen-produk/{produk}','ProdukController@update')->name('produk.update');    
+    Route::post('manajemen-produk/{produk}/ketersediaan','ProdukController@updateKetersediaan')->name('produk.update.ketersediaan');
 
     Route::prefix('galeri-produk')->group(function(){
         Route::get('/{produk}','GalleryController@create')->name('galeri.create');
@@ -83,6 +82,8 @@ Route::group(['middleware'=>['can:penjual'], 'prefix'=>'penjual'],function(){
     Route::prefix('permintaan')->group(function(){
         Route::get('/','PermintaanController@lihatPermintaan')->name('permintaan');
         Route::get('/{keranjang}/detail','PermintaanController@lihatDetail')->name('permintaan.detail');
+        Route::post('/{keranjang}/proses','PermintaanController@proses')->name('permintaan.proses');
+        Route::get('/daftar-proses','PermintaanController@daftarProses')->name('permintaa.diproses');
     });
 
     
