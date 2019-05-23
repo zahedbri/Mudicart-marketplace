@@ -20,11 +20,30 @@
           <form class="form-inline w-50 ml-auto">
             <input class="form-control mr-sm-2 w-100" type="search" placeholder="Search" aria-label="Search">
           </form>
+          @guest
+          <div class="btn-group">
+            <a href="{{route('login')}}" class="btn btn-light">Masuk</a>
+            <a href="{{route('register')}}" class="btn btn-light">Daftar</a>
+          </div>
+          @endguest
+          @can('pembeli')
+          <a href="{{route('keranjang')}}" class="btn btn-primary d-block">
+              <i class="fas fa-cart-plus"></i>
+              Keranjang Anda
+          </a>
+          @endcan
         </div>
       </nav>
         <div class="w-md-25">
           @yield('breadcrumb')
         </div>
+        @guest
+        <div class="container w-75">
+            <div class="alert alert-secondary" role="alert">
+                <strong>Anda belum masuk. Silahkan masuk untuk melanjutkan</strong>
+            </div>
+        </div>
+        @endguest
         @yield('content')
 
       </div>

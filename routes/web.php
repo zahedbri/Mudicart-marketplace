@@ -13,19 +13,18 @@
 Route::get('/','MainMenuController@index')->name('dashboard');
 Route::get('produk/{produk}','MainMenuController@lihatProduk')->name('lihat.produk');
 Route::group(['middleware'=>['can:pembeli']],function(){
-    Route::get('tambah-keranjang/{produk}','CartController@lihatProduk')->name('tambah.produk');
-    Route::post('tambah-keranjang/{produk}','CartController@tambahKeranjang')->name('tambah.item');
+    Route::get('tambah-keranjang/{produk}','ItemController@lihatProduk')->name('tambah.produk');
+    Route::post('tambah-keranjang/{produk}','ItemController@tambahKeranjang')->name('tambah.item');
     Route::get('keranjang-saya','CartController@keranjangSaya')->name('keranjang');
     Route::get('keranjang/{keranjang}','CartController@detailKeranjang')->name('keranjang.detail');
     Route::post('keranjang/{keranjang}/hapus','CartController@hapusKeranjang')->name('keranjang.hapus');
-    Route::post('keranjang/{keranjang}/hapus/{item}','CartController@hapusItem')->name('hapus.item');
-    
+    Route::post('keranjang/{keranjang}/hapus/{item}','ItemController@hapusItem')->name('hapus.item');
+    Route::post('keranjang/{keranjang}/checkout','CartController@checkoutKeranjang')->name('keranjang.checkout');
+    Route::get('keranjang-saya/diproses','CartController@lihatTransaksiBerjalan')->name('keranjang.diproses');
 });
 
-
-
-
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('driver/{driver}','DriverController@profil')->middleware('auth')->name('driver.profil');
 
 // Auth::routes();
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
@@ -65,6 +64,7 @@ Route::group(['middleware'=>['can:penjual'], 'prefix'=>'penjual'],function(){
     Route::get('/','ProdukController@index')->name('penjual.dashboard');
     Route::get('manajemen-produk/{produk}','ProdukController@edit')->name('produk.edit');
     Route::post('manajemen-produk/{produk}','ProdukController@update')->name('produk.update');    
+    Route::post('manajemen-produk/{produk}/ketersediaan','ProdukController@updateKetersediaan')->name('produk.update.ketersediaan');
 
     Route::prefix('galeri-produk')->group(function(){
         Route::get('/{produk}','GalleryController@create')->name('galeri.create');
@@ -77,6 +77,13 @@ Route::group(['middleware'=>['can:penjual'], 'prefix'=>'penjual'],function(){
     Route::prefix('profil')->group(function(){
         Route::get('/','PenjualController@editProfil')->name('profil.edit');
         Route::post('/','PenjualController@updateProfil')->name('profil.update');
+    });
+
+    Route::prefix('permintaan')->group(function(){
+        Route::get('/','PermintaanController@lihatPermintaan')->name('permintaan');
+        Route::get('/{keranjang}/detail','PermintaanController@lihatDetail')->name('permintaan.detail');
+        Route::post('/{keranjang}/proses','PermintaanController@proses')->name('permintaan.proses');
+        Route::get('/daftar-proses','PermintaanController@daftarProses')->name('permintaa.diproses');
     });
 
     

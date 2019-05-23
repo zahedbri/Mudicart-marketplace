@@ -12,8 +12,8 @@
     @endif
     <div class="card" style="width: 50%; margin: auto">
         <div class="card-header">
-            <i class="fa fa-sign-in"></i>
-            Login Page
+            <i class="fas fa-sign-in-alt"></i>
+            Laman Login
         </div>
         <div class="card-body">
             <form action="{{ route('login') }}" method="POST">

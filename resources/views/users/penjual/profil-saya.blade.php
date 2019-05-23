@@ -28,7 +28,7 @@
         <div class="col-md-7">
             <div class="card">
                 <div class="card-body">
-                    <h4>Profil {{$user->nama}} (<i>{{$user->username}})</i></h4>
+                    <h1>Profil {{$user->nama}} (<i>{{$user->username}})</i></h1>
                     <hr>
                     <form action="" method="POST" enctype="multipart/form-data">
                         @csrf

@@ -47,6 +47,9 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('PhotoEdit','App\Policies\GalleryPolicy@edit');
         Gate::define('PhotoUpdate','App\Policies\GalleryPolicy@update');
         Gate::define('PhotoDelete','App\Policies\GalleryPolicy@delete');
+        Gate::define('ItemStore','App\Policies\ItemPolicy@store');
+        Gate::define('ProdukEdit','App\Policies\ProdukPolicy@edit');
+        Gate::define('ProdukUpdate','App\Policies\ProdukPolicy@update');
 
         
 
